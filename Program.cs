@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace Adventure_Game
 {
@@ -17,7 +18,7 @@ namespace Adventure_Game
             public static int posx;
             public static int posy;
             //flowers
-            public static int flowers_amount = 10;
+            public static int flowers_amount = 0;
             public static int flowers_planted_amount = 0;
             public static int flowers_planted = 0; // 0 = false, 1 = true
             public static int flowers_watered_total = 0;
@@ -66,7 +67,7 @@ namespace Adventure_Game
         {
             Console.Clear();
             Console.SetCursorPosition(0, 0);
-            int time = 2000;
+            int time = 1;
             if (story == "beginning")
             {
                 Console.WriteLine("Du bist an einem unbekannten Ort angekommen");
@@ -126,6 +127,8 @@ namespace Adventure_Game
         {
             Console.SetCursorPosition(100, 0);
             Console.WriteLine("Quests");
+            Console.SetCursorPosition(100, 6);
+            Console.WriteLine("Nebenquests");
             Console.SetCursorPosition(100, 1);
             if (Globals.home == false)
             {
@@ -154,6 +157,20 @@ namespace Adventure_Game
                 Console.SetCursorPosition(100, 3);
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Verfolge den Schwarz gekleideten Mann zum Brunnen");
+            }
+            if (Globals.market == true)
+            {
+                Console.SetCursorPosition(100, 7);
+                if (Globals.flowers_planted_amount == 3)
+                {
+                    Console.ForegroundColor= ConsoleColor.Green;
+                    Console.WriteLine("Blumen gepflanzt 3/3");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Blumen gepflanzt {Globals.flowers_planted_amount}/3");
+                }
             }
             Console.ForegroundColor = ConsoleColor.White;
         }
@@ -243,6 +260,12 @@ namespace Adventure_Game
                     {
                         Console.SetCursorPosition(Globals.posx + Globals.posx_map, Globals.posy + Globals.posy_map);
                         Random rnd = new Random();
+                        Random bin = new Random();
+                        int number1 = bin.Next(1, 100);
+                        int number2 = bin.Next(1, 100);
+                        Console.ForegroundColor = (ConsoleColor)bin.Next(0,16);
+                        Console.BackgroundColor = (ConsoleColor)bin.Next(0,16);
+                        Console.SetCursorPosition(number1, number2);
                         char randomChar = (char)rnd.Next('a', 'z');
                         Console.Write(randomChar);
                         
@@ -372,18 +395,3 @@ namespace Adventure_Game
         }
     }
 }
-/*
- * Story
- * 
- * Ideen
- * - Bibliothek (Wissen aneignen) (Stats anzeigen)
- * 10% Chance sich selbst zu gießen
- *
- * Mr. Glitch
- * 
- * Todo
- * 
- * 
- * Changes
- * Map() bearbeitet
-*/
